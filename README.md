@@ -128,6 +128,24 @@ You can customize the configurations for each environment by modifying the `terr
 
 For example, to use a different machine type for the `prod` environment, update the `terraform.tfvars` file in `environments/prod`.
 
+## GitLab CI Workflow
+
+This project includes a GitLab CI/CD pipeline configuration to automate infrastructure-as-code (IaC) workflows using Terraform. The pipeline is defined in a `.gitlab-ci.yml` file and includes the following stages:
+
+1. **Validate**: Validates the syntax and configuration of the Terraform code.
+2. **Plan**: Creates and saves a Terraform execution plan.
+3. **Apply**: Deploys infrastructure based on the Terraform plan (requires manual approval).
+4. **Destroy**: Destroys the deployed infrastructure (requires manual approval).
+5. **Security Check**: Performs additional validation steps to ensure compliance and security.
+
+### Key Highlights of the CI Workflow:
+- The pipeline uses the official HashiCorp Terraform Docker image to run Terraform commands.
+- Tags like `iac-runner-dev_shell` are used to specify the GitLab Runner.
+- Manual approval is required for critical stages like `apply` and `destroy`.
+- Artifacts (e.g., Terraform plans) are stored and reused across stages.
+
+This CI workflow ensures reliable and automated deployment of the infrastructure while providing manual gates for sensitive operations.
+
 ## Best Practices
 
 - Use [Terraform Workspaces](https://www.terraform.io/language/state/workspaces) for managing multiple environments if your project grows.
